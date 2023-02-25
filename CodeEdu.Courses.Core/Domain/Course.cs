@@ -12,11 +12,6 @@ public class Course
         Name = name;
     }
 
-    public void SetDescription(string description)
-    {
-        Description = description;
-    }
-
     public void AddSubject(string name)
     {
         var nextNumber = Subjects.Count + 1;
@@ -24,7 +19,7 @@ public class Course
         Subjects.Add(subject);
     }
 
-    public void RemoveSubject(Guid subjectId)
+    public Subject RemoveSubject(Guid subjectId)
     {
         var subject = Subjects.Find(s => s.Id == subjectId);
 
@@ -39,12 +34,26 @@ public class Course
             .OrderBy(s => s.Number)
             .ToList()
             .ForEach(s => --s.Number);
+
+        return subject;
+    }
+
+    public void ChangeSubjectName(Guid id, string name)
+    {
+        var subject = Subjects.Find(s => s.Id == id);
+
+        if (subject is null)
+        {
+            throw new SubjectNotFoundException();
+        }
+
+        subject.Name = name;
     }
 
     public string Name
     {
         get => _name;
-        private set
+        set
         {
             if (value is null || value.Trim() == string.Empty)
             {
@@ -59,7 +68,8 @@ public class Course
             _name = value;
         }
     }
-    public string? Description { get; private set; }
+
+    public string? Description { get; set; }
     public List<Subject> Subjects { get; private set; } = new();
 
     private string _name;

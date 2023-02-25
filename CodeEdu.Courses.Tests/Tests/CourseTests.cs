@@ -56,7 +56,7 @@ public class CourseTests
         var courseDescription = "This is a description of the course";
 
         // Act
-        course.SetDescription(courseDescription);
+        course.Description = courseDescription;
 
         // Assert
         course.Description.Should().Be(courseDescription);

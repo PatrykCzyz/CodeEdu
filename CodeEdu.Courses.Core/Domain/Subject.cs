@@ -17,7 +17,7 @@ public class Subject
     public string Name
     {
         get => _name;
-        private set
+        set
         {
             if(value is null || value.Trim() == string.Empty)
             {
