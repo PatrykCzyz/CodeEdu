@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
+import { CourseDto } from 'src/app/api/client';
 import { CoursesAddDialogComponent } from 'src/app/features/courses-add-dialog/courses-add-dialog.component';
 
 @Component({
@@ -15,7 +16,7 @@ export class CoursesListPageComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  public openDialog() {
+  public openAddCourseDialog() {
     const coursesAddDialogRef = this.dialog.open(CoursesAddDialogComponent);
     coursesAddDialogRef.afterClosed().subscribe(() => {
       this.refreshSubject.next();

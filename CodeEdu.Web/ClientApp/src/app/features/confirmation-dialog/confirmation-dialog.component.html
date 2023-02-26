@@ -1,0 +1,10 @@
+<h1 mat-dialog-title>{{ title }}</h1>
+<div mat-dialog-content>
+  {{ content }}
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-button [mat-dialog-close]="false">{{ discardText }}</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="true">
+    {{ confirmText }}
+  </button>
+</div>
