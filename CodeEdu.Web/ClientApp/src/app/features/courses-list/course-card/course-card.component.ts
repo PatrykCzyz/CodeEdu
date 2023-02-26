@@ -13,7 +13,9 @@ export class CourseCardComponent implements OnInit {
   public course!: CourseDto;
 
   @Output()
-  public cardRemoved: EventEmitter<void> = new EventEmitter(); 
+  public cardRemoved: EventEmitter<void> = new EventEmitter();
+
+  public shouldShowMore: boolean = false;
 
   constructor(
     private dialog: MatDialog,
@@ -23,11 +25,22 @@ export class CourseCardComponent implements OnInit {
   ngOnInit(): void {}
 
   public getDescription(course: CourseDto) {
-    if (!course.description) return '';
-
-    if (course.description.length <= 258) return course.description;
+    if (
+      !course.description ||
+      course.description.length <= 258 ||
+      this.shouldShowMore
+    )
+      return course.description;
 
     return course.description.substring(0, 255) + '...';
+  }
+
+  public getSortedSubjects(course: CourseDto) {
+    return course.subjects?.sort((a, b) => a.number! - b.number!);
+  }
+
+  public showMore(value: boolean) {
+    this.shouldShowMore = value;
   }
 
   public deleteCourse(course: CourseDto) {

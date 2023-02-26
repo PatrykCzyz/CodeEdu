@@ -16,9 +16,33 @@
     </mat-menu>
   </mat-card-title>
   <mat-card-content>
-    <p>{{ getDescription(course) }}</p>
+    <p class="description">{{ getDescription(course) }}</p>
+    <div *ngIf="shouldShowMore" class="subjects">
+      <h3>Tematy</h3>
+      <div
+        *ngIf="course.subjects && course.subjects.length > 0; else noSubjects"
+      >
+        <div *ngFor="let subject of getSortedSubjects(course)">
+          <div>{{ subject.number }}. {{ subject.name }}</div>
+          <div></div>
+        </div>
+      </div>
+      <ng-template #noSubjects>
+        <span>Brak tematów</span>
+      </ng-template>
+    </div>
   </mat-card-content>
   <mat-card-actions align="end">
-    <button mat-button color="primary">Zobacz więcej</button>
+    <button
+      *ngIf="!shouldShowMore; else showLess"
+      mat-button
+      color="primary"
+      (click)="showMore(true)"
+    >
+      Zobacz więcej
+    </button>
+    <ng-template #showLess>
+      <button mat-button color="primary" (click)="showMore(false)">Zwiń</button>
+    </ng-template>
   </mat-card-actions>
 </mat-card>
