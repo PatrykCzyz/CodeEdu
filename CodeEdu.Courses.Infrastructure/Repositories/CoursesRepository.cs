@@ -28,12 +28,12 @@ public class CoursesRepository : ICoursesRepository
 
     public Task<Course?> GetCourse(Guid id, CancellationToken cancellationToken = default)
     {
-        return _context.Courses.SingleOrDefaultAsync(c => c.Id == id, cancellationToken);
+        return _context.Courses.Include(c => c.Subjects).SingleOrDefaultAsync(c => c.Id == id, cancellationToken);
     }
 
     public async Task<IReadOnlyList<Course>> GetCourses(CancellationToken cancellationToken = default)
     {
-        return await _context.Courses.ToListAsync(cancellationToken);
+        return await _context.Courses.Include(c => c.Subjects).ToListAsync(cancellationToken);
     }
 
     public async Task RemoveCourse(Course course, CancellationToken cancellationToken = default)

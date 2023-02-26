@@ -4,6 +4,8 @@ using CodeEdu.Courses.Core;
 using CodeEdu.Courses.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Autofac.Extensions.DependencyInjection;
+using CodeEdu.Web.Options;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,7 +22,13 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddDbContext<CoursesContext>(options =>
 {
-    var serverVersion = new MySqlServerVersion(new Version(8, 0, 29));
+    var mySqlOptions = builder.Configuration.GetSection("MySql").Get<MySqlOptions>();
+
+    var serverVersion = new MySqlServerVersion(new Version(
+        mySqlOptions.Version.Major,
+        mySqlOptions.Version.Minor,
+        mySqlOptions.Version.Patch));
+
     options.UseMySql(builder.Configuration.GetConnectionString("CoursesContext"), serverVersion);
 });
 
