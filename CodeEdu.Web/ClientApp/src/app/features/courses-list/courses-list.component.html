@@ -1,29 +1,5 @@
 <div class="list">
-  <mat-card
-    class="list__item"
-    *ngFor="let course of courses; trackBy: identify"
-  >
-    <mat-card-title>
-      <div>{{ course.name }}</div>
-      <button
-        mat-icon-button
-        [matMenuTriggerFor]="menu"
-        aria-label="Example icon-button with a menu"
-      >
-        <mat-icon>more_vert</mat-icon>
-      </button>
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="deleteCourse(course)">
-          <mat-icon>delete</mat-icon>
-          <span>Usuń</span>
-        </button>
-      </mat-menu>
-    </mat-card-title>
-    <mat-card-content>
-      <p>{{ getDescription(course) }}</p>
-    </mat-card-content>
-    <mat-card-actions align="end">
-      <button mat-button color="primary">Zobacz więcej</button>
-    </mat-card-actions>
-  </mat-card>
+  <div *ngFor="let course of courses; trackBy: identify">
+    <app-course-card class="list__item" [course]="course" (cardRemoved)="onCardRemoved()"> </app-course-card>
+  </div>
 </div>

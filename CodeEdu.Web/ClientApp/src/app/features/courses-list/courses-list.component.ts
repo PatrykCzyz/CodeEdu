@@ -15,10 +15,7 @@ export class CoursesListComponent implements OnInit, OnDestroy {
 
   public courses: CourseDto[] = [];
 
-  constructor(
-    private _coursesClient: CoursesClient,
-    private dialog: MatDialog
-  ) {}
+  constructor(private _coursesClient: CoursesClient) {}
 
   ngOnDestroy(): void {
     this.refreshSubject?.unsubscribe();
@@ -33,33 +30,8 @@ export class CoursesListComponent implements OnInit, OnDestroy {
     return course.id;
   }
 
-  public getDescription(course: CourseDto) {
-    if (!course.description) return '';
-
-    if (course.description.length <= 258) return course.description;
-
-    return course.description.substring(0, 255) + '...';
-  }
-
-  public deleteCourse(course: CourseDto) {
-    const deleteConfirmationDialog = this.dialog.open(
-      ConfirmationDialogComponent,
-      {
-        data: {
-          title: 'Czy na pewno chcesz usunąć kurs',
-          content: course.name,
-          confirmText: 'Usuń',
-        },
-      }
-    );
-
-    deleteConfirmationDialog.afterClosed().subscribe((confirmed: boolean) => {
-      if (confirmed) {
-        this._coursesClient
-          .removeCourse(course.id!)
-          .subscribe(() => this._getCourses());
-      }
-    });
+  public onCardRemoved() {
+    this._getCourses();
   }
 
   private _getCourses() {

@@ -8,9 +8,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { CoursesListComponent } from './courses-list.component';
 import { CoursesClient } from 'src/app/api/client';
 import { ConfirmationDialogModule } from '../confirmation-dialog/confirmation-dialog.module';
+import { CourseCardComponent } from './course-card/course-card.component';
 
 @NgModule({
-  declarations: [CoursesListComponent],
+  declarations: [CoursesListComponent, CourseCardComponent],
   imports: [
     CommonModule,
     MatGridListModule,
