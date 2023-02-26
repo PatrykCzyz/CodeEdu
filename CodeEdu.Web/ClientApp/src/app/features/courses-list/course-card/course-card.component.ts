@@ -2,6 +2,7 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CourseDto, CoursesClient } from 'src/app/api/client';
 import { ConfirmationDialogComponent } from '../../confirmation-dialog/confirmation-dialog.component';
+import { SubjectAddDialogComponent } from '../../subject-add-dialog/subject-add-dialog.component';
 
 @Component({
   selector: 'app-course-card',
@@ -43,6 +44,15 @@ export class CourseCardComponent implements OnInit {
     this.shouldShowMore = value;
   }
 
+  public addSubject(course: CourseDto) {
+    const subjectAddDialogRef = this.dialog.open(SubjectAddDialogComponent, {
+      data: { course },
+    });
+    subjectAddDialogRef.afterClosed().subscribe(() => {
+      this.refreshCourse();
+    });
+  }
+
   public deleteCourse(course: CourseDto) {
     const deleteConfirmationDialog = this.dialog.open(
       ConfirmationDialogComponent,
@@ -62,5 +72,11 @@ export class CourseCardComponent implements OnInit {
           .subscribe(() => this.cardRemoved.emit());
       }
     });
+  }
+
+  private refreshCourse() {
+    this._coursesClient
+      .getCourse(this.course.id!)
+      .subscribe((course) => (this.course = course));
   }
 }

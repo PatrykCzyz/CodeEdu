@@ -9,6 +9,7 @@ import { CoursesListComponent } from './courses-list.component';
 import { CoursesClient } from 'src/app/api/client';
 import { ConfirmationDialogModule } from '../confirmation-dialog/confirmation-dialog.module';
 import { CourseCardComponent } from './course-card/course-card.component';
+import { SubjectAddDialogModule } from '../subject-add-dialog/subject-add-dialog.module';
 
 @NgModule({
   declarations: [CoursesListComponent, CourseCardComponent],
@@ -20,6 +21,7 @@ import { CourseCardComponent } from './course-card/course-card.component';
     MatMenuModule,
     MatIconModule,
     ConfirmationDialogModule,
+    SubjectAddDialogModule,
   ],
   exports: [CoursesListComponent],
   providers: [CoursesClient],
