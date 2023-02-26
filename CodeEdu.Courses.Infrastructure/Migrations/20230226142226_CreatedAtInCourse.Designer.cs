@@ -3,6 +3,7 @@ using System;
 using CodeEdu.Courses.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CodeEdu.Courses.Infrastructure.Migrations
 {
     [DbContext(typeof(CoursesContext))]
-    partial class CoursesContextModelSnapshot : ModelSnapshot
+    [Migration("20230226142226_CreatedAtInCourse")]
+    partial class CreatedAtInCourse
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

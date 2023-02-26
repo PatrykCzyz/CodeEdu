@@ -10,6 +10,7 @@ public class Course
     public Course(string name)
     {
         Id = Guid.NewGuid();
+        CreatedAt = DateTime.UtcNow;
         Name = name;
     }
 
@@ -75,6 +76,7 @@ public class Course
     public Guid Id { get; private set; }
     public string? Description { get; set; }
     public List<Subject> Subjects { get; private set; } = new();
+    public DateTime CreatedAt { get; private set; }
 
     private string _name;
 }

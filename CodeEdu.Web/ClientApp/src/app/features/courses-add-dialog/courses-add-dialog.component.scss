@@ -1,0 +1,17 @@
+.form {
+  width: 28rem;
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__description {
+    min-height: 4rem;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+}

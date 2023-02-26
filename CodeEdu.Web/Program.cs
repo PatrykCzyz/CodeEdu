@@ -17,8 +17,9 @@ builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
     builder.RegisterModule(new CoursesInfrastructureIocModule());
 });
 
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddControllersWithViews();
+//builder.Services.AddControllers();
+//builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddDbContext<CoursesContext>(options =>
 {
