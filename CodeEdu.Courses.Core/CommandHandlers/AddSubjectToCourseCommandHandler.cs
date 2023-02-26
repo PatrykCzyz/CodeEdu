@@ -10,11 +10,11 @@ namespace CodeEdu.Courses.Core.CommandHandlers;
 
 public class AddSubjectToCourseCommandHandler : IRequestHandler<AddSubjectToCourseCommand>
 {
-    private readonly ICourseRepository _repository;
+    private readonly ICoursesRepository _repository;
     private readonly IMediator _mediator;
 
     public AddSubjectToCourseCommandHandler(
-        ICourseRepository repository,
+        ICoursesRepository repository,
         IMediator mediator)
     {
         _repository = repository;
@@ -25,8 +25,8 @@ public class AddSubjectToCourseCommandHandler : IRequestHandler<AddSubjectToCour
     {
         var course = await _mediator.Send(new GetCourseByIdQuery(request.CourseId), cancellationToken);
 
-        course.AddSubject(request.SubjectName);
+        var subject = course.AddSubject(request.SubjectName);
 
-        await _repository.SaveChanges(cancellationToken);
+        await _repository.AddSubject(subject, cancellationToken);
     }
 }

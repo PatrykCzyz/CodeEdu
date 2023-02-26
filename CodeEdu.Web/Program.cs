@@ -1,8 +1,30 @@
-﻿var builder = WebApplication.CreateBuilder(args);
+﻿using System;
+using Autofac;
+using CodeEdu.Courses.Core;
+using CodeEdu.Courses.Infrastructure;
+using Microsoft.EntityFrameworkCore;
+using Autofac.Extensions.DependencyInjection;
 
-// Add services to the container.
+var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllersWithViews();
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+
+builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
+{
+    builder.RegisterModule(new CoursesCoreIocModule());
+    builder.RegisterModule(new CoursesInfrastructureIocModule());
+});
+
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddDbContext<CoursesContext>(options =>
+{
+    var serverVersion = new MySqlServerVersion(new Version(8, 0, 29));
+    options.UseMySql(builder.Configuration.GetConnectionString("CoursesContext"), serverVersion);
+});
+
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
@@ -11,6 +33,12 @@ if (!app.Environment.IsDevelopment())
 {
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
+}
+
+if(app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();

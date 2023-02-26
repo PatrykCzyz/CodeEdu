@@ -11,11 +11,11 @@ namespace CodeEdu.Courses.Core.CommandHandlers;
 
 public class EditCourseCommandHandler : IRequestHandler<EditCourseCommand>
 {
-    private readonly ICourseRepository _repository;
+    private readonly ICoursesRepository _repository;
     private readonly IMediator _mediator;
 
     public EditCourseCommandHandler(
-        ICourseRepository repository,
+        ICoursesRepository repository,
         IMediator mediator)
     {
         _repository = repository;

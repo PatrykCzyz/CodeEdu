@@ -11,11 +11,11 @@ namespace CodeEdu.Courses.Core.CommandHandlers;
 
 public class RemoveSubjectCommandHandler : IRequestHandler<RemoveSubjectCommand>
 {
-    private readonly ICourseRepository _repository;
+    private readonly ICoursesRepository _repository;
     private readonly IMediator _mediator;
 
     public RemoveSubjectCommandHandler(
-        ICourseRepository repository,
+        ICoursesRepository repository,
         IMediator mediator)
     {
         _repository = repository;
@@ -33,7 +33,7 @@ public class RemoveSubjectCommandHandler : IRequestHandler<RemoveSubjectCommand>
 
         var subject = course.RemoveSubject(request.SubjectId);
 
-        await _repository.SaveChanges(cancellationToken);
+        await _repository.RemoveSubject(subject, cancellationToken);
     }
 }
 

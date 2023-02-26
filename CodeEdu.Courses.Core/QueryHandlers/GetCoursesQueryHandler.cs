@@ -11,9 +11,9 @@ namespace CodeEdu.Courses.Core.QueryHandlers;
 
 public class GetCoursesQueryHandler : IRequestHandler<GetCoursesQuery, IReadOnlyList<Course>>
 {
-    private readonly ICourseRepository _respository;
+    private readonly ICoursesRepository _respository;
 
-    public GetCoursesQueryHandler(ICourseRepository respository)
+    public GetCoursesQueryHandler(ICoursesRepository respository)
     {
         _respository = respository;
     }

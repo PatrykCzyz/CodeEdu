@@ -8,16 +8,16 @@ using MediatR;
 
 namespace CodeEdu.Courses.Core.CommandHandlers;
 
-public class CreateCourseCommandHandler : IRequestHandler<CreateCourseCommand>
+public class CreateCourseCommandHandler : IRequestHandler<CreateCourseCommand, Guid>
 {
-    private readonly ICourseRepository _repository;
+    private readonly ICoursesRepository _repository;
 
-    public CreateCourseCommandHandler(ICourseRepository repository)
+    public CreateCourseCommandHandler(ICoursesRepository repository)
     {
         _repository = repository;
     }
 
-    public async Task Handle(CreateCourseCommand request, CancellationToken cancellationToken)
+    public async Task<Guid> Handle(CreateCourseCommand request, CancellationToken cancellationToken)
     {
         var course = new Course(request.Name);
 
@@ -27,6 +27,7 @@ public class CreateCourseCommandHandler : IRequestHandler<CreateCourseCommand>
         }
 
         await _repository.AddCourse(course, cancellationToken);
+
+        return course.Id;
     }
 }
-

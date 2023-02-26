@@ -9,14 +9,17 @@ public class Course
 {
     public Course(string name)
     {
+        Id = Guid.NewGuid();
         Name = name;
     }
 
-    public void AddSubject(string name)
+    public Subject AddSubject(string name)
     {
         var nextNumber = Subjects.Count + 1;
         var subject = new Subject(name, nextNumber);
         Subjects.Add(subject);
+
+        return subject;
     }
 
     public Subject RemoveSubject(Guid subjectId)
@@ -69,6 +72,7 @@ public class Course
         }
     }
 
+    public Guid Id { get; private set; }
     public string? Description { get; set; }
     public List<Subject> Subjects { get; private set; } = new();
 

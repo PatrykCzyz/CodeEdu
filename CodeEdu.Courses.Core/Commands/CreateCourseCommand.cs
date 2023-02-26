@@ -3,7 +3,7 @@ using MediatR;
 
 namespace CodeEdu.Courses.Core.Commands;
 
-public class CreateCourseCommand : IRequest
+public class CreateCourseCommand : IRequest<Guid>
 {
     public CreateCourseCommand(string name, string? description)
     {
