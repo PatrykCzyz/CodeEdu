@@ -26,7 +26,7 @@ export class CoursesFormDialogComponent {
   constructor(
     private _client: CoursesClient,
     private _dialogRef: MatDialogRef<CoursesFormDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: CoursesFormDialogData
+    @Inject(MAT_DIALOG_DATA) data: CoursesFormDialogData
   ) {
     this.course = data?.course ?? null;
     const nameInitValue = data?.course?.name ?? '';

@@ -17,6 +17,10 @@
         <mat-icon>add</mat-icon>
         <span>Dodaj temat</span>
       </button>
+      <button mat-menu-item (click)="changeSubjectsOrder()" [disabled]="!canChangeOrder">
+        <mat-icon>low_priority</mat-icon>
+        <span>Zmień kolejność tematów</span>
+      </button>
       <button mat-menu-item (click)="deleteCourse()">
         <mat-icon>delete</mat-icon>
         <span>Usuń</span>

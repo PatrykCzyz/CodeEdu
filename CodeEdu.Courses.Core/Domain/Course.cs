@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using CodeEdu.Courses.Core.Dtos;
 using CodeEdu.Courses.Core.Exceptions;
 
 namespace CodeEdu.Courses.Core.Domain;
@@ -40,6 +41,35 @@ public class Course
             .ForEach(s => --s.Number);
 
         return subject;
+    }
+
+    public void ChangeSubjectsOrder(IReadOnlyList<SubjectOrderDto> newOrder)
+    {
+        if(newOrder.Count != Subjects.Count)
+        {
+            throw new NewSubjectsOrderIsInvalid();
+        }
+
+        var orderedNewOrder = newOrder.OrderBy(o => o.Number).ToList();
+
+        for(var i = 0; i < Subjects.Count; i++)
+        {
+            var subjectOrder = orderedNewOrder[i];
+
+            if(subjectOrder.Number != i + 1)
+            {
+                throw new NewSubjectsOrderIsInvalid();
+            }
+
+            var subject = Subjects.SingleOrDefault(s => s.Id == subjectOrder.SubjectId);
+
+            if (subject is null)
+            {
+                throw new NewSubjectsOrderIsInvalid();
+            }
+
+            subject.Number = subjectOrder.Number;
+        }
     }
 
     public void ChangeSubjectName(Guid id, string name)

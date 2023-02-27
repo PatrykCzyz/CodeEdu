@@ -1,0 +1,21 @@
+
+.list {
+  border: solid 1px #ccc;
+  background: white;
+  border-radius: 4px;
+  overflow: hidden;
+
+  &__item {
+    border-bottom: solid 1px #ccc;
+    padding: 1rem .5rem;
+    min-width: 16rem;
+    background: white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    cursor: move;
+    font-size: 14px;
+  }
+}

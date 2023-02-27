@@ -1,5 +1,6 @@
 ﻿using CodeEdu.Courses.Core.Commands;
 using CodeEdu.Courses.Core.Domain;
+using CodeEdu.Courses.Core.Dtos;
 using CodeEdu.Courses.Core.Queries;
 using CodeEdu.Web.Dtos;
 using MediatR;
@@ -85,6 +86,17 @@ public class CoursesController : ControllerBase
         CancellationToken cancellationToken)
     {
         await _mediator.Send(new RemoveSubjectCommand(courseId, subjectId), cancellationToken);
+
+        return Ok();
+    }
+
+    [HttpPatch("[action]/{courseId}")]
+    public async Task<IActionResult> ChangeSubjectsOrder(
+        Guid courseId,
+        [FromBody] IReadOnlyList<SubjectOrderDto> dto,
+        CancellationToken cancellationToken)
+    {
+        await _mediator.Send(new ChangeSubjectsOrderCommand(courseId, dto), cancellationToken);
 
         return Ok();
     }

@@ -19,6 +19,7 @@
     <None Remove="Repositories\" />
     <None Remove="Queries\" />
     <None Remove="QueryHandlers\" />
+    <None Remove="Dtos\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Domain\" />
@@ -28,6 +29,7 @@
     <Folder Include="Repositories\" />
     <Folder Include="Queries\" />
     <Folder Include="QueryHandlers\" />
+    <Folder Include="Dtos\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MediatR" Version="12.0.1" />

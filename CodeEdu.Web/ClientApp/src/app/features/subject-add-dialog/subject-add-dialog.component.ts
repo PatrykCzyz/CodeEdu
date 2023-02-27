@@ -16,7 +16,7 @@ export class SubjectAddDialogComponent {
   constructor(
     private _client: CoursesClient,
     private _dialogRef: MatDialogRef<SubjectAddDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: SubjectAddDialogData
+    @Inject(MAT_DIALOG_DATA) data: SubjectAddDialogData
   ) {
     this.course = data.course;
 

@@ -5,7 +5,7 @@ import { AddCourseDto, CourseDto, CoursesClient } from 'src/app/api/client';
 import {
   CoursesFormDialogComponent,
   CoursesFormDialogResult,
-} from 'src/app/features/courses-add-dialog/courses-form-dialog.component';
+} from 'src/app/features/courses-form-dialog/courses-form-dialog.component';
 
 @Component({
   selector: 'app-courses-page',

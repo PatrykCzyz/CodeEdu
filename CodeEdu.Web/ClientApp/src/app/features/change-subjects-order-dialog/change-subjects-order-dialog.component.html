@@ -1,0 +1,17 @@
+<h1 mat-dialog-title>{{ course.name }}</h1>
+<div mat-dialog-content>
+  <div
+    cdkDropList
+    class="list"
+    [cdkDropListData]="subjects"
+    (cdkDropListDropped)="drop($event)"
+  >
+    <div class="list__item" *ngFor="let subject of subjects; let i = index" cdkDrag>
+      {{ i + 1 }}. {{ subject.name }}
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-button [mat-dialog-close]="{ success: false }">Anuluj</button>
+  <button mat-raised-button color="primary" (click)="save()">Zapisz</button>
+</div>

@@ -1,11 +1,15 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CourseDto, CoursesClient } from 'src/app/api/client';
+import {
+  ChangeSubjectsOrderDialogComponent,
+  ChangeSubjectsOrderDialogResult,
+} from '../../change-subjects-order-dialog/change-subjects-order-dialog.component';
 import { ConfirmationDialogComponent } from '../../confirmation-dialog/confirmation-dialog.component';
 import {
   CoursesFormDialogComponent,
   CoursesFormDialogResult,
-} from '../../courses-add-dialog/courses-form-dialog.component';
+} from '../../courses-form-dialog/courses-form-dialog.component';
 import { SubjectAddDialogComponent } from '../../subject-add-dialog/subject-add-dialog.component';
 
 @Component({
@@ -21,6 +25,10 @@ export class CourseCardComponent implements OnInit {
   public cardRemoved: EventEmitter<void> = new EventEmitter();
 
   public shouldShowMore: boolean = false;
+
+  public get canChangeOrder() {
+    return (this.course.subjects?.length ?? 0) > 0;
+  }
 
   constructor(
     private dialog: MatDialog,
@@ -55,6 +63,22 @@ export class CourseCardComponent implements OnInit {
     subjectAddDialogRef.afterClosed().subscribe(() => {
       this.refreshCourse();
     });
+  }
+
+  public changeSubjectsOrder() {
+    const changeSubjectsOrderDialogRef = this.dialog.open(
+      ChangeSubjectsOrderDialogComponent,
+      {
+        data: { course: this.course },
+      }
+    );
+    changeSubjectsOrderDialogRef
+      .afterClosed()
+      .subscribe((result: ChangeSubjectsOrderDialogResult) => {
+        if (result.success) {
+          this.refreshCourse();
+        }
+      });
   }
 
   public editCourse() {

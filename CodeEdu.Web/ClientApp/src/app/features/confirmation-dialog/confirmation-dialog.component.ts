@@ -12,7 +12,7 @@ export class ConfirmationDialogComponent implements OnInit {
   public confirmText: string = 'Potwierdź';
   public discardText: string = 'Anuluj';
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: ConfirmationDialogData) {
+  constructor(@Inject(MAT_DIALOG_DATA) data: ConfirmationDialogData) {
     if (data) {
       const { title, content, confirmText, discardText } = data;
       title && (this.title = title);
