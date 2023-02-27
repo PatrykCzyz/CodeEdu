@@ -1,9 +1,14 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .list {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 2rem;
-  padding: 2rem 16rem;
-
-  &__item {
-  }
+  padding: 2rem .25rem;
+  max-width: 1000px;
 }
