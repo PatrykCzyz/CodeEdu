@@ -10,7 +10,7 @@ import { CoursesListComponent } from './courses-list.component';
 import { CoursesClient } from 'src/app/api/client';
 import { ConfirmationDialogModule } from '../confirmation-dialog/confirmation-dialog.module';
 import { CourseCardComponent } from './course-card/course-card.component';
-import { SubjectAddDialogModule } from '../subject-add-dialog/subject-add-dialog.module';
+import { SubjectFormDialogModule } from '../subject-form-dialog/subject-form-dialog.module';
 import { ChangeSubjectsOrderDialogModule } from '../change-subjects-order-dialog/change-subjects-order-dialog.module';
 
 @NgModule({
@@ -24,7 +24,7 @@ import { ChangeSubjectsOrderDialogModule } from '../change-subjects-order-dialog
     MatIconModule,
     MatProgressSpinnerModule,
     ConfirmationDialogModule,
-    SubjectAddDialogModule,
+    SubjectFormDialogModule,
     ChangeSubjectsOrderDialogModule,
   ],
   exports: [CoursesListComponent],

@@ -17,7 +17,11 @@
         <mat-icon>add</mat-icon>
         <span>Dodaj temat</span>
       </button>
-      <button mat-menu-item (click)="changeSubjectsOrder()" [disabled]="!canChangeOrder">
+      <button
+        mat-menu-item
+        (click)="changeSubjectsOrder()"
+        [disabled]="!canChangeOrder"
+      >
         <mat-icon>low_priority</mat-icon>
         <span>Zmień kolejność tematów</span>
       </button>
@@ -34,9 +38,24 @@
       <div
         *ngIf="course.subjects && course.subjects.length > 0; else noSubjects"
       >
-        <div *ngFor="let subject of getSortedSubjects(course)">
+        <div *ngFor="let subject of getSortedSubjects(course)" class="subject">
           <div>{{ subject.number }}. {{ subject.name }}</div>
-          <div></div>
+          <div class="subject__actions">
+            <button
+              mat-icon-button
+              color="primary"
+              (click)="editSubject(subject)"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button
+              mat-icon-button
+              color="warn"
+              (click)="deleteSubject(subject)"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
         </div>
       </div>
       <ng-template #noSubjects>

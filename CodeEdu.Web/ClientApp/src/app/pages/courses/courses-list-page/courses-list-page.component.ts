@@ -24,7 +24,7 @@ export class CoursesListPageComponent implements OnInit {
     coursesAddDialogRef
       .afterClosed()
       .subscribe((result: CoursesFormDialogResult) => {
-        if (result.success) {
+        if (result && result.success) {
           this.refreshSubject.next();
         }
       });

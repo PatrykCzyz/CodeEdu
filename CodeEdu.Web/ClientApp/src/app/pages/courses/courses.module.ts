@@ -6,7 +6,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { CoursesListPageComponent } from './courses-list-page/courses-list-page.component';
 import { CoursesListModule } from 'src/app/features/courses-list/courses-list.module';
 import { CoursesFormDialogModule } from 'src/app/features/courses-form-dialog/courses-form-dialog.module';
-import { SubjectAddDialogModule } from 'src/app/features/subject-add-dialog/subject-add-dialog.module';
+import { SubjectFormDialogModule } from 'src/app/features/subject-form-dialog/subject-form-dialog.module';
 
 @NgModule({
   declarations: [CoursesListPageComponent],

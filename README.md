@@ -9,6 +9,7 @@ https://codeedu-web.azurewebsites.net/
 ## Technologie
 
 * .NET 7
+* .NET Standard 2.1
 * Angular 14
 * Angular Materials
 * xUnit

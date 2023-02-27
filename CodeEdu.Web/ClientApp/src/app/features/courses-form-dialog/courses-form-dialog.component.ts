@@ -46,7 +46,7 @@ export class CoursesFormDialogComponent {
       return;
     }
 
-    this.save().subscribe({
+    this._save().subscribe({
       next: () => {
         this._dialogRef.close({ success: true });
       },
@@ -54,7 +54,7 @@ export class CoursesFormDialogComponent {
     });
   }
 
-  private save() {
+  private _save() {
     const { name, description } = this.form.value;
 
     return this.course

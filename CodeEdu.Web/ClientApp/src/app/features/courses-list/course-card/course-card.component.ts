@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { CourseDto, CoursesClient } from 'src/app/api/client';
+import { filter, switchMap } from 'rxjs';
+import { CourseDto, CoursesClient, SubjectDto } from 'src/app/api/client';
 import {
   ChangeSubjectsOrderDialogComponent,
   ChangeSubjectsOrderDialogResult,
@@ -10,7 +11,7 @@ import {
   CoursesFormDialogComponent,
   CoursesFormDialogResult,
 } from '../../courses-form-dialog/courses-form-dialog.component';
-import { SubjectAddDialogComponent } from '../../subject-add-dialog/subject-add-dialog.component';
+import { SubjectAddDialogComponent } from '../../subject-form-dialog/subject-form-dialog.component';
 
 @Component({
   selector: 'app-course-card',
@@ -31,7 +32,7 @@ export class CourseCardComponent implements OnInit {
   }
 
   constructor(
-    private dialog: MatDialog,
+    private _dialog: MatDialog,
     private _coursesClient: CoursesClient
   ) {}
 
@@ -57,16 +58,16 @@ export class CourseCardComponent implements OnInit {
   }
 
   public addSubject() {
-    const subjectAddDialogRef = this.dialog.open(SubjectAddDialogComponent, {
+    const subjectAddDialogRef = this._dialog.open(SubjectAddDialogComponent, {
       data: { course: this.course },
     });
     subjectAddDialogRef.afterClosed().subscribe(() => {
-      this.refreshCourse();
+      this._refreshCourse();
     });
   }
 
   public changeSubjectsOrder() {
-    const changeSubjectsOrderDialogRef = this.dialog.open(
+    const changeSubjectsOrderDialogRef = this._dialog.open(
       ChangeSubjectsOrderDialogComponent,
       {
         data: { course: this.course },
@@ -75,14 +76,14 @@ export class CourseCardComponent implements OnInit {
     changeSubjectsOrderDialogRef
       .afterClosed()
       .subscribe((result: ChangeSubjectsOrderDialogResult) => {
-        if (result.success) {
-          this.refreshCourse();
+        if (result && result.success) {
+          this._refreshCourse();
         }
       });
   }
 
   public editCourse() {
-    const courseEditDialogRef = this.dialog.open(CoursesFormDialogComponent, {
+    const courseEditDialogRef = this._dialog.open(CoursesFormDialogComponent, {
       data: {
         course: this.course,
       },
@@ -90,14 +91,14 @@ export class CourseCardComponent implements OnInit {
     courseEditDialogRef
       .afterClosed()
       .subscribe((result: CoursesFormDialogResult) => {
-        if (result.success) {
-          this.refreshCourse();
+        if (result && result.success) {
+          this._refreshCourse();
         }
       });
   }
 
   public deleteCourse() {
-    const deleteConfirmationDialog = this.dialog.open(
+    const deleteConfirmationDialog = this._dialog.open(
       ConfirmationDialogComponent,
       {
         data: {
@@ -108,16 +109,53 @@ export class CourseCardComponent implements OnInit {
       }
     );
 
-    deleteConfirmationDialog.afterClosed().subscribe((confirmed: boolean) => {
-      if (confirmed) {
-        this._coursesClient
-          .removeCourse(this.course.id!)
-          .subscribe(() => this.cardRemoved.emit());
-      }
+    deleteConfirmationDialog
+      .afterClosed()
+      .pipe(
+        filter((confirmed: boolean) => confirmed),
+        switchMap(() => this._coursesClient.removeCourse(this.course.id!))
+      )
+      .subscribe(() => {
+        this.cardRemoved.emit();
+      });
+  }
+
+  public editSubject(subject: SubjectDto) {
+    const subjectEditDialogRef = this._dialog.open(SubjectAddDialogComponent, {
+      data: { course: this.course, subject },
+    });
+
+    subjectEditDialogRef.afterClosed().subscribe(() => {
+      this._refreshCourse();
     });
   }
 
-  private refreshCourse() {
+  public deleteSubject(subject: SubjectDto) {
+    const deleteConfirmationDialog = this._dialog.open(
+      ConfirmationDialogComponent,
+      {
+        data: {
+          title: 'Czy na pewno chcesz usunąć temat',
+          content: `${this.course.name} > ${subject.name}`,
+          confirmText: 'Usuń',
+        },
+      }
+    );
+
+    deleteConfirmationDialog
+      .afterClosed()
+      .pipe(
+        filter((confirmed: boolean) => confirmed),
+        switchMap(() =>
+          this._coursesClient.removeSubject(this.course.id!, subject.id!)
+        )
+      )
+      .subscribe(() => {
+        this._refreshCourse();
+      });
+  }
+
+  private _refreshCourse() {
     this._coursesClient
       .getCourse(this.course.id!)
       .subscribe((course) => (this.course = course));
