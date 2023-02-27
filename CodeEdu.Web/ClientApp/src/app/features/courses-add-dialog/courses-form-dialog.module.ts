@@ -4,10 +4,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
-import { CoursesAddDialogComponent } from './courses-add-dialog.component';
+import { CoursesFormDialogComponent } from './courses-form-dialog.component';
 
 @NgModule({
-  declarations: [CoursesAddDialogComponent],
+  declarations: [CoursesFormDialogComponent],
   imports: [
     CommonModule,
     MatInputModule,
@@ -15,6 +15,6 @@ import { CoursesAddDialogComponent } from './courses-add-dialog.component';
     MatDialogModule,
     ReactiveFormsModule,
   ],
-  exports: [CoursesAddDialogComponent],
+  exports: [CoursesFormDialogComponent],
 })
-export class CoursesAddDialogModule {}
+export class CoursesFormDialogModule {}

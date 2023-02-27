@@ -9,11 +9,15 @@
       <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item (click)="addSubject(course)">
+      <button mat-menu-item (click)="editCourse()">
+        <mat-icon>edit</mat-icon>
+        <span>Edytuj kurs</span>
+      </button>
+      <button mat-menu-item (click)="addSubject()">
         <mat-icon>add</mat-icon>
         <span>Dodaj temat</span>
       </button>
-      <button mat-menu-item (click)="deleteCourse(course)">
+      <button mat-menu-item (click)="deleteCourse()">
         <mat-icon>delete</mat-icon>
         <span>Usuń</span>
       </button>

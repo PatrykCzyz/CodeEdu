@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
-import { CourseDto } from 'src/app/api/client';
-import { CoursesAddDialogComponent } from 'src/app/features/courses-add-dialog/courses-add-dialog.component';
+import { AddCourseDto, CourseDto, CoursesClient } from 'src/app/api/client';
+import {
+  CoursesFormDialogComponent,
+  CoursesFormDialogResult,
+} from 'src/app/features/courses-add-dialog/courses-form-dialog.component';
 
 @Component({
   selector: 'app-courses-page',
@@ -12,14 +15,18 @@ import { CoursesAddDialogComponent } from 'src/app/features/courses-add-dialog/c
 export class CoursesListPageComponent implements OnInit {
   public refreshSubject: Subject<void> = new Subject();
 
-  constructor(private dialog: MatDialog) {}
+  constructor(private _dialog: MatDialog, private _client: CoursesClient) {}
 
   ngOnInit(): void {}
 
   public openAddCourseDialog() {
-    const coursesAddDialogRef = this.dialog.open(CoursesAddDialogComponent);
-    coursesAddDialogRef.afterClosed().subscribe(() => {
-      this.refreshSubject.next();
-    });
+    const coursesAddDialogRef = this._dialog.open(CoursesFormDialogComponent);
+    coursesAddDialogRef
+      .afterClosed()
+      .subscribe((result: CoursesFormDialogResult) => {
+        if (result.success) {
+          this.refreshSubject.next();
+        }
+      });
   }
 }

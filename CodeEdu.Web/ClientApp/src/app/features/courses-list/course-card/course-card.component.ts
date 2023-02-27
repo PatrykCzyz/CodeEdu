@@ -2,6 +2,10 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CourseDto, CoursesClient } from 'src/app/api/client';
 import { ConfirmationDialogComponent } from '../../confirmation-dialog/confirmation-dialog.component';
+import {
+  CoursesFormDialogComponent,
+  CoursesFormDialogResult,
+} from '../../courses-add-dialog/courses-form-dialog.component';
 import { SubjectAddDialogComponent } from '../../subject-add-dialog/subject-add-dialog.component';
 
 @Component({
@@ -44,22 +48,37 @@ export class CourseCardComponent implements OnInit {
     this.shouldShowMore = value;
   }
 
-  public addSubject(course: CourseDto) {
+  public addSubject() {
     const subjectAddDialogRef = this.dialog.open(SubjectAddDialogComponent, {
-      data: { course },
+      data: { course: this.course },
     });
     subjectAddDialogRef.afterClosed().subscribe(() => {
       this.refreshCourse();
     });
   }
 
-  public deleteCourse(course: CourseDto) {
+  public editCourse() {
+    const courseEditDialogRef = this.dialog.open(CoursesFormDialogComponent, {
+      data: {
+        course: this.course,
+      },
+    });
+    courseEditDialogRef
+      .afterClosed()
+      .subscribe((result: CoursesFormDialogResult) => {
+        if (result.success) {
+          this.refreshCourse();
+        }
+      });
+  }
+
+  public deleteCourse() {
     const deleteConfirmationDialog = this.dialog.open(
       ConfirmationDialogComponent,
       {
         data: {
           title: 'Czy na pewno chcesz usunąć kurs',
-          content: course.name,
+          content: this.course.name,
           confirmText: 'Usuń',
         },
       }
@@ -68,7 +87,7 @@ export class CourseCardComponent implements OnInit {
     deleteConfirmationDialog.afterClosed().subscribe((confirmed: boolean) => {
       if (confirmed) {
         this._coursesClient
-          .removeCourse(course.id!)
+          .removeCourse(this.course.id!)
           .subscribe(() => this.cardRemoved.emit());
       }
     });
