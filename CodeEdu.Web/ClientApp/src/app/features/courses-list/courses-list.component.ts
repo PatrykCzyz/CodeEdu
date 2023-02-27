@@ -13,6 +13,7 @@ export class CoursesListComponent implements OnInit, OnDestroy {
   @Input()
   public refreshSubject?: Subject<void>;
 
+  public isLoading: boolean = false;
   public courses: CourseDto[] = [];
 
   constructor(private _coursesClient: CoursesClient) {}
@@ -35,10 +36,14 @@ export class CoursesListComponent implements OnInit, OnDestroy {
   }
 
   private _getCourses() {
-    this._coursesClient.getCourses().subscribe((res) => {
-      this.courses = res.sort(
-        (a, b) => b.createdAt!.getTime() - a.createdAt!.getTime()
-      );
+    this.isLoading = true;
+    this._coursesClient.getCourses().subscribe({
+      next: (res) => {
+        this.courses = res.sort(
+          (a, b) => b.createdAt!.getTime() - a.createdAt!.getTime()
+        );
+      },
+      complete: () => this.isLoading = false
     });
   }
 }

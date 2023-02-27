@@ -1,5 +1,5 @@
 <div class="container">
-  <div class="list">
+  <div *ngIf="!isLoading; else loading" class="list">
     <div *ngFor="let course of courses; trackBy: identify">
       <app-course-card
         class="list__item"
@@ -9,4 +9,7 @@
       </app-course-card>
     </div>
   </div>
+  <ng-template #loading>
+    <mat-spinner diameter="48"></mat-spinner>
+  </ng-template>
 </div>
